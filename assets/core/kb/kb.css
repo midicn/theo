@@ -1,0 +1,435 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   midicn 内核 · kb/assets/kb.css
+   知识条目的排版与组件样式（仅知识八站引入）
+
+   依赖 base.css 的变量：--ink/--ink-2/--rule/--paper/--paper-2/--paper-3
+                        --vermilion/--gold/--jade/--slate
+                        --serif/--sans/--mono/--fs-*/--s*/--r/--wrap-read
+   命名：全部 kb- 前缀，与在役三站零冲突
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 语言切换按钮 ───────────────────────────────────────────────────── */
+.kb-lang{
+  flex:0 0 auto; margin-left:var(--s3);
+  padding:.26em .62em; font-size:var(--fs-12); line-height:1.4;
+  border:1px solid var(--rule-2); border-radius:var(--r);
+  text-decoration:none; opacity:.8; white-space:nowrap;
+  transition:border-color var(--t), opacity var(--t);
+}
+.kb-lang:hover{ border-color:var(--accent); opacity:1; text-decoration:none }
+
+/* ── 阅读容器 ───────────────────────────────────────────────────────── */
+.doc{ padding:var(--s6) 0 var(--s8) }
+.kb-read{ max-width:none }
+/* 长单词 / 长链接不得顶破版心（任何宽度都不出现横向滚动） */
+.doc p,.doc li,.doc h1,.doc h2,.doc h3,.doc h4,.doc blockquote,.kb-title,.kb-why{
+  overflow-wrap:break-word;
+}
+
+/* ── 标题层级 ───────────────────────────────────────────────────────── */
+.doc h1{
+  font-family:var(--serif); font-size:var(--fs-46); font-weight:400;
+  line-height:1.18; letter-spacing:.01em; margin:0 0 var(--s4);
+  text-wrap:balance;
+}
+.doc h2{
+  font-family:var(--serif); font-size:var(--fs-26); font-weight:400;
+  line-height:1.3; margin:var(--s7) 0 var(--s3);
+  padding-bottom:var(--s2); border-bottom:1px solid var(--rule);
+}
+.doc h3{
+  font-size:var(--fs-20); font-weight:500; margin:var(--s5) 0 var(--s2);
+}
+.doc h4{
+  font-size:var(--fs-16); font-weight:500; margin:var(--s4) 0 var(--s2);
+  opacity:.9;
+}
+/* 页内目录跳转时，目标标题不被吸顶的顶栏盖住 */
+.doc h2,.doc h3,.doc h4{ scroll-margin-top:calc(var(--hdr) + var(--s3)) }
+.doc p{
+  font-size:var(--fs-16); line-height:var(--lh-body);
+  margin:0 0 var(--s3); text-wrap:pretty;
+}
+.doc .kb-lead{
+  font-size:var(--fs-20); line-height:1.62; color:var(--paper-2);
+  margin:0 0 var(--s5);
+}
+.doc ul{ margin:0 0 var(--s3); padding-left:1.25em }
+.doc li{ font-size:var(--fs-16); line-height:var(--lh-body); margin:.2em 0 }
+.doc a{ color:inherit; text-underline-offset:.22em; text-decoration-color:var(--rule-2) }
+.doc a:hover{ text-decoration-color:var(--accent) }
+.doc code{
+  font-family:var(--mono); font-size:.9em;
+  background:var(--ink-3); padding:.12em .38em; border-radius:var(--r);
+}
+.doc blockquote{
+  margin:var(--s4) 0; padding:var(--s2) 0 var(--s2) var(--s4);
+  border-left:2px solid var(--rule-2); color:var(--paper-2);
+}
+.kb-note{
+  font-size:var(--fs-13); color:var(--paper-3); line-height:1.6;
+  margin:var(--s3) 0 0;
+}
+.kb-broken{
+  color:var(--vermilion); border-bottom:1px dashed var(--vermilion-line);
+  font-family:var(--mono); font-size:.9em;
+}
+
+/* ── 可播元素 ───────────────────────────────────────────────────────── */
+.kb-instances{
+  margin:var(--s7) 0; padding:var(--s4) var(--s5);
+  background:var(--ink-2); border:1px solid var(--rule); border-radius:var(--r-lg);
+}
+.kb-instances h2{ margin-top:0; border-bottom-color:var(--rule) }
+.kb-items{ display:flex; flex-direction:column; gap:2px; margin:var(--s3) 0 }
+
+.kb-item{
+  display:flex; align-items:center; gap:var(--s3);
+  padding:var(--s2) var(--s3); border-radius:var(--r);
+  transition:background-color var(--t);
+}
+.kb-item:hover{ background:var(--ink-3) }
+.kb-item-inline{ display:inline-flex; vertical-align:baseline; padding:.05em .4em; gap:.4em }
+
+.kb-play{
+  flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+  border:1px solid var(--rule-2); background:transparent; color:var(--paper);
+  font-size:0; line-height:1; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:border-color var(--t), background-color var(--t), transform var(--t);
+}
+/* 图标随播放状态切换（▶ / ❚❚）。**用 CSS 画，不依赖任何字体或图标库** ——
+   按钮内的 ▶ 文本被 font-size:0 隐去，只作为无样式时的兜底 */
+.kb-play::before{
+  content:""; display:block;
+  width:0; height:0; margin-left:2px;
+  border-style:solid; border-width:5px 0 5px 8px;
+  border-color:transparent transparent transparent currentColor;
+}
+.kb-play[aria-pressed="true"]::before{
+  width:8px; height:10px; margin-left:0;
+  border:0;
+  background:linear-gradient(to right,
+    currentColor 0 3px, transparent 3px 5px, currentColor 5px 8px);
+}
+.kb-play:hover{ border-color:var(--accent); background:var(--ink-3) }
+.kb-play[aria-pressed="true"]{
+  border-color:var(--accent); color:var(--accent);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.kb-title{ flex:1 1 auto; font-size:var(--fs-14); min-width:0 }
+.kb-why{
+  flex:1 1 100%; font-size:var(--fs-13); color:var(--paper-3);
+  padding-left:calc(26px + var(--s3));
+}
+.kb-item{ flex-wrap:wrap }
+.kb-play-meta{ display:inline-flex; align-items:center; gap:var(--s2); flex:0 0 auto }
+.kb-dur{ font-family:var(--mono); font-size:var(--fs-12); color:var(--paper-3) }
+.kb-detail{
+  flex:0 0 auto; font-size:var(--fs-12); opacity:.5;
+  text-decoration:none; white-space:nowrap;
+}
+.kb-detail:hover{ opacity:1; text-decoration:underline }
+
+/* 许可徽标（与在役三站同规格）*/
+.kb-lic{
+  font-family:var(--mono); font-size:var(--fs-10); letter-spacing:.04em;
+  padding:.1em .38em; border-radius:var(--r); border:1px solid currentColor;
+  opacity:.85;
+}
+.kb-lic-c1{ color:var(--jade) }
+.kb-lic-c2{ color:var(--gold) }
+.kb-lic-c3{ color:var(--vermilion) }
+
+/* ── 图示 ───────────────────────────────────────────────────────────── */
+.kb-fig{
+  margin:var(--s5) 0; padding:var(--s4);
+  background:var(--ink-2); border:1px solid var(--rule); border-radius:var(--r-lg);
+  overflow-x:auto;
+}
+.kb-fig svg{ display:block; width:100%; height:auto; min-width:min(100%,420px) }
+
+/* ── 听辨组件 ───────────────────────────────────────────────────────── */
+.kb-lab{
+  margin:var(--s5) 0; padding:var(--s4) var(--s5);
+  background:var(--ink-2); border:1px solid var(--rule); border-radius:var(--r-lg);
+}
+.kb-lab-head{
+  display:flex; align-items:center; gap:var(--s3); flex-wrap:wrap;
+  margin-bottom:var(--s3);
+}
+.kb-lab-label{ font-size:var(--fs-14); font-weight:500 }
+.kb-lab-hint{ font-size:var(--fs-12); color:var(--paper-3) }
+.kb-lab-row{ display:flex; align-items:center; gap:var(--s3); flex-wrap:wrap; margin:var(--s2) 0 }
+.kb-lab-btn{
+  min-width:74px; padding:.42em .9em; font-size:var(--fs-13);
+  background:transparent; color:var(--paper);
+  border:1px solid var(--rule-2); border-radius:var(--r); cursor:pointer;
+  transition:border-color var(--t), background-color var(--t);
+}
+.kb-lab-btn:hover{ border-color:var(--accent) }
+.kb-lab-btn[aria-pressed="true"]{ border-color:var(--accent); color:var(--accent) }
+.kb-lab-btn.kb-lab-on{ border-color:var(--accent); color:var(--accent) }
+.kb-lab select, .kb-lab input[type=range]{
+  background:var(--ink-3); color:var(--paper);
+  border:1px solid var(--rule-2); border-radius:var(--r);
+  font-size:var(--fs-13); padding:.3em .5em;
+}
+.kb-lab input[type=range]{ padding:0; accent-color:var(--accent) }
+.kb-lab canvas{
+  display:block; width:100%; height:76px; margin-top:var(--s3);
+  background:var(--ink-4); border:1px solid var(--rule); border-radius:var(--r);
+}
+/* 节奏型拍点指示器（不是按钮，只做视觉高亮）*/
+.kb-dot{
+  display:inline-block; min-width:32px; text-align:center;
+  padding:.3em .5em; font-family:var(--mono); font-size:var(--fs-12);
+  border:1px solid var(--rule); border-radius:var(--r); opacity:.6;
+  transition:border-color .1s linear, opacity .1s linear;
+}
+.kb-dot-on{ border-color:var(--accent); color:var(--accent); opacity:1 }
+
+/* ── 关联 chips ─────────────────────────────────────────────────────── */
+.kb-rel{ margin:var(--s6) 0 0 }
+.kb-chips{ display:flex; flex-wrap:wrap; gap:var(--s2) }
+.kb-chip{
+  display:inline-block; padding:.28em .7em; font-size:var(--fs-13);
+  border:1px solid var(--rule-2); border-radius:var(--r);
+  text-decoration:none; opacity:.85; transition:border-color var(--t), opacity var(--t);
+}
+.kb-chip:hover{ border-color:var(--accent); opacity:1; text-decoration:none }
+
+/* ── 事实来源 ───────────────────────────────────────────────────────── */
+.kb-sources{ margin:var(--s6) 0 0; padding-top:var(--s4); border-top:1px solid var(--rule) }
+.kb-sources h2{ font-size:var(--fs-16); border:0; margin:0 0 var(--s2); opacity:.7 }
+.kb-sources ul{ margin:0; padding-left:1.2em }
+.kb-sources li{ font-size:var(--fs-13); color:var(--paper-2); line-height:1.6 }
+
+/* ── 站首页：分类块与列表 ───────────────────────────────────────────── */
+.kb-cat{ margin:var(--s6) 0 0 }
+.kb-cat h2{ font-size:var(--fs-20); border-bottom:1px solid var(--rule) }
+.kb-list{ list-style:none; margin:var(--s3) 0 0; padding:0 }
+.kb-list li{ margin:0; border-bottom:1px solid var(--rule) }
+.kb-list a{
+  display:block; padding:var(--s3) var(--s2); text-decoration:none;
+  transition:background-color var(--t);
+}
+.kb-list a:hover{ background:var(--ink-2); text-decoration:none }
+.kb-t{ display:block; font-size:var(--fs-16); margin-bottom:.15em }
+.kb-d{ display:block; font-size:var(--fs-13); color:var(--paper-3); line-height:1.55 }
+
+/* ── 底部播放条 ─────────────────────────────────────────────────────── */
+.pbar{
+  position:sticky; bottom:0; z-index:var(--z-play);
+  background:var(--ink-2); border-top:1px solid var(--rule);
+  padding:var(--s2) 0 calc(var(--s2) + var(--sa-b));
+}
+.pbar[hidden]{ display:none }
+.pbar-inner{
+  display:flex; align-items:center; gap:var(--s3);
+  max-width:var(--wrap); margin:0 auto;
+  width:var(--wrap); padding:0 var(--gutter);
+}
+.pbar-title{ flex:0 1 auto; max-width:32%; font-size:var(--fs-13); min-width:0;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+.pbar-time{ font-family:var(--mono); font-size:var(--fs-12); color:var(--paper-3);
+  flex:0 0 auto; white-space:nowrap }
+/* 播放进度：可拖动的范围控件（自绘外观，零依赖；触摸目标 ≥ 24px） */
+.pbar-seek{
+  flex:1 1 auto; min-width:80px; height:24px; margin:0;
+  -webkit-appearance:none; appearance:none; background:transparent;
+  cursor:pointer; touch-action:pan-y;
+}
+.pbar-seek::-webkit-slider-runnable-track{
+  height:4px; border-radius:2px; background:var(--ink-4); border:1px solid var(--rule);
+}
+.pbar-seek::-moz-range-track{
+  height:4px; border-radius:2px; background:var(--ink-4); border:1px solid var(--rule);
+}
+.pbar-seek::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:14px; height:14px; margin-top:-6px; border-radius:50%;
+  background:var(--accent); border:0;
+}
+.pbar-seek::-moz-range-thumb{
+  width:14px; height:14px; border:0; border-radius:50%; background:var(--accent);
+}
+.pbar-seek:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
+@media (max-width:640px){
+  .pbar-title{ max-width:40% }
+  .pbar-seek{ height:28px }
+  .pbar-seek::-webkit-slider-thumb{ width:18px; height:18px; margin-top:-8px }
+  .pbar-seek::-moz-range-thumb{ width:18px; height:18px }
+}
+
+/* ── 阅读栏宽度上限（超宽屏时封顶，避免一行过长）───────────────────── */
+:root{ --read:1440px }
+
+/* ── 表格 ───────────────────────────────────────────────────────────── */
+/* 宽屏：正常表格；中窄屏：容器内横向滚动；手机：**堆叠成卡片**（用列标签代替表头），
+   三种形态都不产生「需要拖横条」的阅读体验 —— 见总纲 §7.6 ③ */
+.kb-tablewrap{
+  margin:var(--s4) 0; max-width:100%;
+  border:1px solid var(--rule); border-radius:var(--r);
+  background:var(--ink-2);
+}
+.kb-tablewrap:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
+.kb-tablewrap table{ width:100%; min-width:0; border-collapse:collapse; margin:0 }
+.kb-tablewrap th,.kb-tablewrap td{
+  padding:var(--s3); border-bottom:1px solid var(--rule);
+  text-align:left; vertical-align:top; font-size:var(--fs-13); line-height:1.65;
+  overflow-wrap:anywhere;
+}
+.kb-tablewrap thead th{
+  color:var(--paper-2); font-weight:500;
+  background:var(--ink-3); border-bottom-color:var(--rule-2);
+}
+.kb-tablewrap tbody tr:last-child td{ border-bottom:0 }
+.kb-tablewrap tbody tr:hover{ background:var(--ink-3) }
+/* 中窄屏（641–900px）：表格可能仍偏宽 → 容器内横向滚动（不撑破版心） */
+@media (min-width:641px) and (max-width:900px){
+  .kb-tablewrap{ overflow-x:auto; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch }
+  .kb-tablewrap table{ min-width:440px }
+}
+/* 手机（≤640px）：行 → 卡片，列名由 ::before 从 data-label 取，**完全不需要横向滚动** */
+@media (max-width:640px){
+  .kb-tablewrap{ padding:var(--s2) 0 }
+  .kb-tablewrap thead{ display:none }
+  .kb-tablewrap tbody tr{
+    display:block; padding:var(--s2) var(--s3);
+    border-bottom:1px solid var(--rule);
+  }
+  .kb-tablewrap tbody tr:last-child{ border-bottom:0 }
+  .kb-tablewrap tbody tr:hover{ background:transparent }
+  .kb-tablewrap td{
+    display:flex; gap:var(--s3); border:0; padding:.18em 0; font-size:var(--fs-13);
+  }
+  .kb-tablewrap td::before{
+    content:attr(data-label);
+    flex:0 0 38%; color:var(--paper-3); font-size:var(--fs-12); line-height:1.7;
+  }
+}
+
+/* ── 条目页版式：阅读栏 + 页内目录 ──────────────────────────────────── */
+/* 阅读栏宽度跟随版心，但在超宽屏封顶（避免一行过长）；
+   1400px 以上把富余宽度交给 JS 生成的 .kb-aside 目录栏 —— 见总纲 §7.6 */
+.doc-article{
+  display:flex; flex-wrap:wrap; align-items:flex-start;
+  justify-content:center; gap:var(--s5);
+}
+.doc-article .kb-crumbs{ flex:1 1 100% }
+.kb-body{ width:100%; max-width:min(100%, var(--read, 1440px)); min-width:0 }
+
+/* ── 页内目录（APP 化：窄屏为可折叠披露，宽屏为常驻侧栏）─────────────── */
+/* 结构由 kb.js 生成：<aside class="kb-aside"><details><summary>…</summary><nav>…</nav></details> */
+.kb-aside{ flex:1 1 100%; order:-1; margin:0 0 var(--s3); width:100%; }
+.kb-tocbox{
+  border:1px solid var(--rule); border-radius:var(--r); background:var(--ink-2);
+}
+.kb-tocbox > summary{
+  cursor:pointer; list-style:none;
+  padding:var(--s3) var(--s4); font-size:var(--fs-13); color:var(--paper-2);
+  display:flex; align-items:center; gap:var(--s2);
+}
+.kb-tocbox > summary::-webkit-details-marker{ display:none }
+.kb-tocbox > summary::after{
+  content:"▾"; margin-left:auto; font-size:11px; opacity:.45; transition:transform var(--t);
+}
+.kb-tocbox[open] > summary::after{ transform:rotate(180deg) }
+.kb-tocbox > .kb-toc{ padding:0 var(--s4) var(--s3) }
+.kb-toc h2{ display:none }
+.kb-toc a{
+  display:block; padding:.34em 0; font-size:var(--fs-13);
+  text-decoration:none; opacity:.75; border-bottom:1px solid transparent;
+}
+.kb-toc a:hover{ opacity:1; color:var(--accent) }
+.kb-toc a:active{ opacity:.6 }
+
+/* 宽屏：目录变成右侧常驻栏（summary 隐藏 → 无法折叠，恒为展开） */
+@media (min-width:1400px){
+  .kb-aside{ order:0; flex:0 0 208px; width:208px; margin:0 }
+  .kb-tocbox{ border:0; background:transparent }
+  .kb-tocbox > summary{ display:none }
+  .kb-tocbox > .kb-toc{ display:block; padding:0; position:sticky; top:calc(var(--hdr) + var(--s4)) }
+  .kb-toc h2{ display:block; font-size:var(--fs-12); font-weight:600; opacity:.6; letter-spacing:.04em }
+}
+@media (min-width:1920px){ .kb-aside{ flex:0 0 224px; width:224px } }
+@media (min-width:2560px){ .kb-aside{ flex:0 0 256px; width:256px } }
+
+/* ── 站首页：分类块网格（窄屏单栏，宽屏多栏）────────────────────────── */
+.kb-cats{ display:grid; gap:var(--s5) var(--s6); grid-template-columns:1fr }
+
+/* ── 窄屏（手机，≤640px）────────────────────────────────────────────── */
+@media (max-width:640px){
+  .doc h1{ font-size:var(--fs-34) }
+  .doc h2{ font-size:var(--fs-20) }
+  .kb-instances{ padding:var(--s3) var(--s4) }
+  .kb-why{ padding-left:0 }
+  .kb-item{ flex-wrap:wrap; row-gap:var(--s2) }
+  .kb-lab-row{ flex-wrap:wrap; row-gap:var(--s2) }
+  .kb-lab-btn{ flex:1 1 auto }
+  .pbar-inner{ width:auto; padding:0 var(--s3) }
+  .pbar-title{ font-size:var(--fs-12) }
+  /* 代码块在手机上也换行，避免出现横向滚动条 */
+  .doc pre{ white-space:pre-wrap; overflow-wrap:anywhere }
+  /* 触摸目标放大到拇指友好（APP 手感）：播放 26 → 38，详情链接加大内边距 */
+  .kb-play{ width:38px; height:38px }
+  .kb-play::before{ border-width:6px 0 6px 10px; margin-left:3px }
+  .kb-play[aria-pressed="true"]::before{
+    width:10px; height:12px; margin-left:0;
+    background:linear-gradient(to right,
+      currentColor 0 4px, transparent 4px 6px, currentColor 6px 10px);
+  }
+  .kb-play:active{ transform:scale(.93) }
+  .kb-detail{ padding:.42em .7em; margin:-.42em -.3em }
+  .kb-item{ padding:var(--s3) var(--s2) }
+  .kb-lab-btn{ padding:.62em .9em; font-size:var(--fs-13) }
+  /* 正文呼吸更松一点：手机上一屏文字少，行距略增更好读 */
+  .doc p, .doc li{ line-height:1.78 }
+}
+
+/* ── 平板（641–1023px）───────────────────────────────────────────────── */
+@media (min-width:641px) and (max-width:1023px){
+  .doc h1{ font-size:var(--fs-38) }
+  .kb-instances{ padding:var(--s3) var(--s4) }
+  .kb-item{ flex-wrap:wrap; row-gap:var(--s2) }
+}
+
+/* ── 普通桌面（1024–1399px）：阅读栏占满版心，不出目录栏 ───────────── */
+@media (min-width:1024px) and (max-width:1399px){
+  .kb-body{ max-width:100% }
+}
+
+/* ── 宽屏（≥1400px）：阅读栏 + 页内目录两栏 ────────────────────────── */
+@media (min-width:1400px){
+  .kb-body{ flex:0 1 auto; max-width:min(100%, var(--read, 1440px)) }
+  .kb-cats{ grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)) }
+}
+
+/* ── 超宽屏（≥1920px / 2K · 3440 带鱼屏）：放宽版心，让目录栏真正用上 ── */
+@media (min-width:1920px){
+  /* 版心从 1560 放宽到 1840，多出来的宽度全部给目录栏与更宽松的间距 */
+  .doc-article{ gap:var(--s6) }
+  .kb-cats{ grid-template-columns:repeat(auto-fit, minmax(min(100%, 460px), 1fr)) }
+}
+
+/* ── 4K / 超宽（≥2560px）：进一步放宽留白，正文行宽仍封顶 ──────────── */
+@media (min-width:2560px){
+  .doc-article{ gap:var(--s7) }
+  .kb-cats{ grid-template-columns:repeat(auto-fit, minmax(min(100%, 520px), 1fr)) }
+}
+
+
+/* ── 五度圈（audiolab: circle）────────────────────────────────────────── */
+.kb-circle-row{ align-items:flex-start }
+.kb-circle{
+  width:100%; max-width:300px; height:auto; flex:0 0 auto; color:var(--paper-2);
+}
+.kb-cseg{ cursor:pointer }
+.kb-cseg path{ transition:fill var(--t), stroke var(--t) }
+.kb-cseg:hover path{ stroke:var(--accent) }
+.kb-cseg text{ pointer-events:none }
+.kb-circle-now{ fill:var(--paper); font-family:var(--serif) }
+@media (max-width:640px){
+  .kb-circle{ max-width:230px; margin:0 auto }
+}

@@ -1,0 +1,156 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   midicn 内核 · core/assets/shell.css
+   知识矩阵的外壳补充样式（**只加不覆盖**）
+
+   命名约定：全部类名以 `kb-` 前缀 —— 与 base.css（在役三站的样式）零冲突。
+   本文件属于 core/，lib / mid / zip 若不需要可整份不引入。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 子站切换器 ─────────────────────────────────────────────────────── */
+/* 始终**自动换行**：任何宽度下都不得出现「显示不全 / 要拖横条」的情况
+   （用户 2026-09-23 明确要求；总纲 §7.6 ③）。窄屏靠缩小字号与内边距收进 2–3 行。 */
+.kb-switch{
+  display:flex; flex-wrap:wrap; gap:2px 4px; align-items:center;
+  margin:0; padding:0; list-style:none;
+  min-width:0;
+}
+.kb-switch a{
+  display:inline-block;
+  padding:.28em .52em;
+  font-size:var(--fs-12);
+  line-height:1.35;
+  border-radius:2px;
+  text-decoration:none;
+  white-space:nowrap;
+  opacity:.62;
+  transition:opacity .15s, background-color .15s;
+}
+.kb-switch a:hover{ opacity:1; background:color-mix(in srgb, currentColor 12%, transparent) }
+.kb-switch a[aria-current="page"]{
+  opacity:1;
+  font-weight:500;
+  box-shadow:inset 0 -2px 0 var(--accent, currentColor);
+}
+.kb-switch .kb-switch-sep{ opacity:.22; padding:0 .15em; user-select:none }
+
+/* 平板与窄屏（≤1023px）：子站切换器独占一行，语言按钮靠右留在首行
+   （顶栏在 base.css 的 ≤1023px 断点已改为可换行） */
+@media (max-width:1023px){
+  .kb-switch{ flex:1 1 100%; order:9; padding-top:var(--s1) }
+  .kb-lang{ margin-left:auto }
+}
+
+/* 手机（≤640px）：切换器进一步收字号与内边距，确保 11 个子站也能 2–3 行排完，
+   并且**绝不出现横向滚动**（原来这里用的是 overflow-x:auto + nowrap，已废弃） */
+@media (max-width:640px){
+  .kb-switch{ gap:1px 2px }
+  .kb-switch a{ font-size:var(--fs-11); padding:.24em .38em; letter-spacing:0 }
+  .kb-switch .kb-switch-sep{ padding:0 .05em }
+}
+
+/* ── 知识站顶栏：品牌后缀（如「音乐知识 · 乐理」）───────────────────── */
+.kb-suffix{ opacity:.6; font-weight:400 }
+.kb-suffix::before{ content:"·"; margin:0 .38em; opacity:.5 }
+
+/* ── 辅助色（每站一个，通过 <html data-site="theo"> 生效）────────────── */
+:root{ --accent:#E8C547 }
+:root[data-site="hist"]{ --accent:#C97B4A }
+:root[data-site="comp"]{ --accent:#B8860B }
+:root[data-site="theo"]{ --accent:#5B7FA8 }
+:root[data-site="inst"]{ --accent:#9C7A3C }
+:root[data-site="gen"] { --accent:#8A6BA8 }
+:root[data-site="prod"]{ --accent:#5F8A8B }
+:root[data-site="cn"]  { --accent:#C0504A }
+
+/* ── 面包屑（知识站统一）─────────────────────────────────────────────── */
+.kb-crumbs{
+  display:flex; flex-wrap:wrap; align-items:center; gap:.3em;
+  font-size:var(--fs-12); opacity:.7;
+  margin:0 0 1.1rem;
+}
+.kb-crumbs a{ text-decoration:none; opacity:.85 }
+.kb-crumbs a:hover{ opacity:1; text-decoration:underline }
+.kb-crumbs .sep{ opacity:.35 }
+
+/* ── 超宽屏：放宽版心（正文行宽由 kb.css 的 .kb-body 另行封顶）────────
+   基础值 `--wrap:min(92vw,1560px)` 在 1920 / 2560 / 3440 上会留下大片空白；
+   这里只在**知识站**放宽版心，多出来的宽度交给页内目录栏与更宽松的间距。
+   数据三站不引入本文件，故不受影响。 */
+@media (min-width:1920px){ :root{ --wrap:min(92vw,1840px) } }
+@media (min-width:2560px){ :root{ --wrap:min(88vw,2120px) } }
+
+/* ── 移动端 APP 化：安全区与触摸手感（总纲 §7.7）─────────────────────── */
+/* ① 安全区：PWA 以 standalone 打开时内容会顶到状态栏与 Home 指示条下面，
+      需要按 env() 补出安全距离。左右只在横屏带缺口时有值，故用 max() 兜底。 */
+@supports (padding: max(0px)){
+  .hbar{
+    padding-top:var(--sa-t);
+    padding-left:max(var(--gutter), var(--sa-l));
+    padding-right:max(var(--gutter), var(--sa-r));
+  }
+  main.doc{
+    padding-left:max(var(--gutter), var(--sa-l));
+    padding-right:max(var(--gutter), var(--sa-r));
+  }
+  .footwrap{
+    padding-left:max(var(--gutter), var(--sa-l));
+    padding-right:max(var(--gutter), var(--sa-r));
+    padding-bottom:calc(var(--s4) + var(--sa-b) + env(safe-area-inset-bottom, 0px));
+  }
+}
+/* ② 顶栏滚动收纳：窄屏专属（下滚隐藏、上滚出现）—— 阅读时不占屏 */
+header{ transition:transform .22s ease }
+header.is-hidden{ transform:translateY(-100%) }
+@media (min-width:1024px){ header.is-hidden{ transform:none } }
+@media (prefers-reduced-motion:reduce){ header{ transition:none } }
+
+/* ③ 触摸手感：去掉点击高亮块，改为瞬时的按压缩放 —— 更接近原生 App 的反馈 */
+a,button,summary,[role="button"]{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;                 /* 去掉 300ms 双击缩放等待 */
+}
+.kb-switch a:active{ opacity:1; background:color-mix(in srgb, currentColor 18%, transparent) }
+.kb-lang:active{ border-color:var(--accent); opacity:1 }
+summary:active{ opacity:.75 }
+
+/* ── 全站统一页脚（总纲 §7.5）───────────────────────────────────────── */
+/* 宽度与顶栏/正文对齐：外层 footer 只画通栏分隔线，内层 .footwrap 承担
+   `--wrap` 宽度与左右内边距（与 .hbar / main.doc 完全同一套参数）。 */
+footer.foot{ padding:0 }
+.footwrap{
+  width:100%; max-width:var(--wrap); margin:0 auto;
+  padding:var(--s4) var(--gutter) calc(var(--s4) + var(--sa-b));
+}
+.footline{
+  display:flex; flex-wrap:wrap; align-items:center;
+  padding-bottom:var(--s3); margin-bottom:var(--s3);
+  border-bottom:1px solid var(--rule);
+}
+.footnote{
+  margin:0; font-size:var(--fs-12); line-height:1.9; color:var(--paper-3);
+  max-width:96ch;
+}
+.footnote a{ color:var(--paper-2); border-bottom:1px solid var(--rule-2) }
+.footnote a:hover{ color:var(--accent) }
+.footmeta{
+  margin:var(--s3) 0 0;
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:.2em var(--s3);
+  font-size:var(--fs-11); color:var(--paper-3);
+}
+.footlinks{ display:inline-flex; flex-wrap:wrap; gap:.2em var(--s3) }
+.footlinks a{ color:var(--paper-3); border-bottom:0 }
+.footlinks a:hover{ color:var(--accent) }
+.footcore{
+  font-family:var(--mono); opacity:.72;
+}
+.footcore::before{ content:"·"; margin-right:.45em; opacity:.6 }
+
+/* ── 侧栏目录（长条目用）─────────────────────────────────────────────── */
+.kb-toc{
+  font-size:var(--fs-13);
+  border-left:1px solid var(--rule);
+  padding-left:.85rem;
+}
+.kb-toc a{ display:block; padding:.18em 0; text-decoration:none; opacity:.7 }
+.kb-toc a:hover{ opacity:1 }
+:root[data-theme=light] .kb-toc{ border-left-color:var(--rule) }
