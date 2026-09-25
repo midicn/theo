@@ -1,7 +1,7 @@
 {
   "name": "midicn · Theory",
   "short_name": "Theory",
-  "description": "【批次 M3】⭐ 首个开工站（用于验证内核）。",
+  "description": "A structured course in music theory and harmony — pitch, intervals, scales and modes, chords, harmonic progression, counterpoint, rhythm, melody, form, notation and performance practice. Every entry pairs playable examples with hand-drawn diagrams, all originally written in Chinese and English.",
   "start_url": "../en/",
   "scope": "./",
   "display": "standalone",

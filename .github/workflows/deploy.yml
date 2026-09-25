@@ -1,0 +1,122 @@
+name: Deploy theo site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # ⚠️ 只装配**要给访问者的文件**（与 lib / mid / zip / sf 同一纪律）：
+      #    不把仓库元文件（README / .github）暴露成线上路径。
+      #    本站是**纯静态**的 —— 页面只读本站 assets，运行时不调用任何第三方接口。
+      #
+      # ★ 装配采用「**以 sitemap 为清单 + 自校验**」：
+      #   条目目录有 157 个，手写显式清单必然有一天会漏（sf 的专区页就漏过一次）。
+      #   这里改为**从 sitemap.xml 读全部 URL**，逐个复制，再**逐个断言产物存在** ——
+      #   于是「新增条目忘记登记」这类错误在结构上不可能发生。
+      - name: Assemble site
+        run: |
+          set -e
+          mkdir -p _build
+          cp index.html manifest.webmanifest robots.txt sitemap.xml _build/
+          cp -r assets _build/assets
+
+          python3 - <<'PY'
+          import os, re, shutil, sys
+
+          BASE = 'https://theo.midicn.com/'
+          s = open('sitemap.xml', encoding='utf-8').read()
+          locs = re.findall(r'<loc>([^<]+)</loc>', s)
+          if not locs:
+              sys.exit('::error::sitemap.xml 里没有任何 <loc> —— 拒绝装配空站点')
+
+          copied = set()
+          for loc in locs:
+              if not loc.startswith(BASE):
+                  sys.exit('::error::sitemap 含站外 URL：%s' % loc)
+              rel = loc[len(BASE):].strip('/')
+              if not rel:
+                  continue                      # 首页已在上面单独复制
+              src = rel
+              if not os.path.isdir(src):
+                  sys.exit('::error::sitemap 声明了 %s，但仓库里没有该目录' % rel)
+              if src in copied:
+                  continue
+              copied.add(src)
+              dst = os.path.join('_build', rel)
+              os.makedirs(os.path.dirname(dst), exist_ok=True)
+              shutil.copytree(src, dst, dirs_exist_ok=True)
+
+          # ── 自校验：sitemap 里每一个 URL 都必须在产物里有对应页面 ──────────
+          missing = []
+          for loc in locs:
+              rel = loc[len(BASE):].strip('/')
+              p = os.path.join('_build', rel, 'index.html') if rel else '_build/index.html'
+              if not os.path.isfile(p):
+                  missing.append(loc)
+          if missing:
+              for x in missing[:10]:
+                  print('::error::装配缺页 %s' % x)
+              sys.exit('装配缺页 %d 个' % len(missing))
+
+          # ── 结构断言：PWA 与资产必须齐 ────────────────────────────────────
+          for f in ('_build/manifest.webmanifest', '_build/en/manifest.webmanifest',
+                    '_build/robots.txt', '_build/sitemap.xml',
+                    '_build/assets/core/kb/kb.js', '_build/assets/core/base.css'):
+              if not os.path.isfile(f):
+                  sys.exit('::error::装配缺文件 %s' % f)
+
+          # ── 公开产物卫生：内部批次号 / 脚本名 / 开发说明一律不得上线 ──────
+          BAD = [r'【批次', r'批次\s*M\d', r'preflight', r'kb_preflight', r'check_entry',
+                 r'build_kb\.py', r'首个开工站', r'验证内核', r'kb-core', r'_authoring',
+                 r'\bM\d-[a-z]\b']
+          rx = re.compile('|'.join(BAD))
+          hits = []
+          for r, _d, fs in os.walk('_build'):
+              for f in fs:
+                  if not f.endswith(('.html', '.xml', '.txt', '.webmanifest', '.json', '.css', '.js')):
+                      continue
+                  fp = os.path.join(r, f)
+                  m = rx.search(open(fp, encoding='utf-8', errors='ignore').read())
+                  if m:
+                      hits.append('%s (%s)' % (os.path.relpath(fp, '_build'), m.group(0)))
+          if hits:
+              for h in hits[:10]:
+                  print('::error::产物含内部标记 %s' % h)
+              sys.exit('公开产物卫生检查未过：%d 处' % len(hits))
+
+          npages = sum(1 for r, _d, fs in os.walk('_build') for f in fs if f.endswith('.html'))
+          print('装配完成：sitemap %d 个 URL 逐一核对存在 · 产物 HTML %d 个' % (len(locs), npages))
+          PY
+
+          du -sh _build
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _build
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
