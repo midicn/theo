@@ -40,7 +40,7 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
     <svg viewBox="0 0 64 64" width="22" height="22" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#070706"/><rect x="14" y="26" width="5" height="15" rx="2.5" fill="#E07A3F" opacity=".55"/><rect x="23" y="18" width="5" height="31" rx="2.5" fill="#E07A3F" opacity=".8"/><rect x="32" y="29" width="5" height="12" rx="2.5" fill="#E8C547"/><path d="M43 16h5v22l-5 4z" fill="#E8C547"/><ellipse cx="41" cy="41" rx="7.5" ry="5.5" transform="rotate(-18 41 41)" fill="#E8C547"/></svg>
     <span>midicn</span><span class="kb-suffix">乐理与和声</span>
   </a>
-  <nav class="kb-switch" aria-label="midicn"><a href="https://midicn.com/">首页</a><a href="https://gloss.midicn.com/">音乐词典</a><a href="https://hist.midicn.com/">音乐史</a><a href="https://comp.midicn.com/">作曲家</a><a href="https://theo.midicn.com/" aria-current="page">乐理与和声</a><a href="https://inst.midicn.com/">乐器图鉴</a><a href="https://gen.midicn.com/">流派与风格</a><a href="https://prod.midicn.com/">制作与数字音乐</a><a href="https://cn.midicn.com/">中国音乐</a><span class="kb-switch-sep" aria-hidden="true">/</span><a href="https://lib.midicn.com/">音乐库</a><a href="https://mid.midicn.com/">维度浏览</a><a href="https://zip.midicn.com/">包下载</a></nav>
+  <nav class="kb-switch" aria-label="midicn"><a href="https://midicn.com/">首页</a><a href="https://gloss.midicn.com/">音乐词典</a><a href="https://hist.midicn.com/">音乐史</a><a href="https://comp.midicn.com/">作曲家</a><a href="https://theo.midicn.com/" aria-current="page">乐理与和声</a><a href="https://inst.midicn.com/">乐器图鉴</a><a href="https://gen.midicn.com/">流派与风格</a><a href="https://prod.midicn.com/">制作与数字音乐</a><a href="https://cn.midicn.com/">中国音乐</a><span class="kb-switch-sep" aria-hidden="true">/</span><a href="https://lib.midicn.com/">音乐库</a><a href="https://mid.midicn.com/">维度浏览</a><a href="https://zip.midicn.com/">包下载</a><a href="https://sf.midicn.com/">音色库</a></nav>
   <a class="kb-lang" href="https://theo.midicn.com/en/key-signature/" hreflang="en" data-setlang="en">EN</a>
 </header>
 <main class="doc doc-article">
@@ -60,7 +60,7 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
 <div class="kb-tablewrap" role="region" tabindex="0"><table><thead><tr><th></th><th>调号</th><th>临时记号</th></tr></thead><tbody><tr><td data-label="">位置</td><td data-label="调号">谱号之后</td><td data-label="临时记号">音符之前</td></tr><tr><td data-label="">生效范围</td><td data-label="调号"><strong>整段（除非更换）</strong></td><td data-label="临时记号"><strong>本小节内有效</strong></td></tr><tr><td data-label="">作用</td><td data-label="调号">设定<strong>默认值</strong></td><td data-label="临时记号"><strong>一次性</strong>的改动</td></tr></tbody></table></div>
 <p><strong>"临时记号只在本小节内有效"是硬规则</strong>：若下一个小节还要那个音，必须<strong>再标一次</strong>。 这条规则常让初学者困惑，但它有一个明确的理由： <strong>小节是重音与和声的基本单位</strong>（见 <a href="https://theo.midicn.com/meter/">拍号</a>），所以记号的效力也按小节划分。</p>
 <h2 id="换调号时会发生什么">换调号时会发生什么</h2>
-<div class="kb-tablewrap" role="region" tabindex="0"><table><thead><tr><th>情况</th><th>做法</th></tr></thead><tbody><tr><td data-label="情况">转调到新调</td><td data-label="做法">在<strong>新谱表行开头</strong>写新调号，有时在行末写"取消旧调号"</td></tr><tr><td data-label="情况">临时取消</td><td data-label="做法">用还原号（♮）逐个还原</td></tr><tr><td data-label="情况">短距离离调</td><td data-label="做法"><strong>不改调号</strong>，改用临时记号（见 [[concept:accidentals</td></tr></tbody></table></div>
+<div class="kb-tablewrap" role="region" tabindex="0"><table><thead><tr><th>情况</th><th>做法</th></tr></thead><tbody><tr><td data-label="情况">转调到新调</td><td data-label="做法">在<strong>新谱表行开头</strong>写新调号，有时在行末写"取消旧调号"</td></tr><tr><td data-label="情况">临时取消</td><td data-label="做法">用还原号（♮）逐个还原</td></tr><tr><td data-label="情况">短距离离调</td><td data-label="做法"><strong>不改调号</strong>，改用临时记号（见 <a href="https://theo.midicn.com/accidentals/">变音记号</a>）</td></tr></tbody></table></div>
 <p>第三行的取舍是记谱实务的核心：<strong>近处用临时记号，远处才改调号</strong> —— 所以"一首曲子里调号变了"往往意味着<strong>发生了大的转调</strong>（见 <a href="https://theo.midicn.com/modulation/">转调</a>）。</p>
 <h2 id="图示-调号是默认值">图示：调号是默认值</h2>
 <figure class="kb-fig"><svg viewBox="0 0 640 206" xmlns="http://www.w3.org/2000/svg">
@@ -114,8 +114,8 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
 </main>
 <footer class="foot">
   <div class="footwrap">
-    <div class="footline"><nav class="kb-switch" aria-label="midicn"><a href="https://midicn.com/">首页</a><a href="https://gloss.midicn.com/">音乐词典</a><a href="https://hist.midicn.com/">音乐史</a><a href="https://comp.midicn.com/">作曲家</a><a href="https://theo.midicn.com/" aria-current="page">乐理与和声</a><a href="https://inst.midicn.com/">乐器图鉴</a><a href="https://gen.midicn.com/">流派与风格</a><a href="https://prod.midicn.com/">制作与数字音乐</a><a href="https://cn.midicn.com/">中国音乐</a><span class="kb-switch-sep" aria-hidden="true">/</span><a href="https://lib.midicn.com/">音乐库</a><a href="https://mid.midicn.com/">维度浏览</a><a href="https://zip.midicn.com/">包下载</a></nav></div>
-    <p class="footnote">内容原创，依 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 授权（可商用、可改写，须署名）。曲目数据来自 <a href="https://lib.midicn.com/">midicn-lib</a>，许可逐曲标注，本站不改变原许可；本站内容为通识性说明，不构成专业意见，许可状态以 midicn-lib 台账为准。</p><p class="footmeta"><span class="footlinks"><a href="https://midicn.com/legal/terms/">使用条款</a> · <a href="https://midicn.com/legal/privacy/">隐私政策</a> · <a href="https://midicn.com/legal/disclaimer/">免责声明</a> · <a href="https://midicn.com/legal/copyright/">版权与侵权通知</a></span><span class="footcore">内核 v0.4.0</span></p>
+    <div class="footline"><nav class="kb-switch" aria-label="midicn"><a href="https://midicn.com/">首页</a><a href="https://gloss.midicn.com/">音乐词典</a><a href="https://hist.midicn.com/">音乐史</a><a href="https://comp.midicn.com/">作曲家</a><a href="https://theo.midicn.com/" aria-current="page">乐理与和声</a><a href="https://inst.midicn.com/">乐器图鉴</a><a href="https://gen.midicn.com/">流派与风格</a><a href="https://prod.midicn.com/">制作与数字音乐</a><a href="https://cn.midicn.com/">中国音乐</a><span class="kb-switch-sep" aria-hidden="true">/</span><a href="https://lib.midicn.com/">音乐库</a><a href="https://mid.midicn.com/">维度浏览</a><a href="https://zip.midicn.com/">包下载</a><a href="https://sf.midicn.com/">音色库</a></nav></div>
+    <p class="footnote">内容原创，依 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 授权（可商用、可改写，须署名）。曲目数据来自 <a href="https://lib.midicn.com/">midicn-lib</a>，许可逐曲标注，本站不改变原许可；本站内容为通识性说明，不构成专业意见，许可状态以 midicn-lib 台账为准。</p><p class="footmeta"><span class="footlinks"><a href="https://midicn.com/legal/terms/">使用条款</a> · <a href="https://midicn.com/legal/privacy/">隐私政策</a> · <a href="https://midicn.com/legal/disclaimer/">免责声明</a> · <a href="https://midicn.com/legal/copyright/">版权与侵权通知</a></span><span class="footcore">内核 v0.5.0</span></p>
   </div>
 </footer>
 <div id="player" class="pbar" hidden>
@@ -128,7 +128,7 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
     <button type="button" class="kb-lab-btn" data-pbar="stop">停止</button>
   </div>
 </div>
-<script>window.__KB__={"site": "theo", "core": "0.4.0", "lang": "zh", "lbl": {"play": "播放", "pause": "暂停", "toc": "本页目录"}};</script>
+<script>window.__KB__={"site": "theo", "core": "0.5.0", "lang": "zh", "lbl": {"play": "播放", "pause": "暂停", "toc": "本页目录"}};</script>
 <script defer src="https://lib.midicn.com/vendor/Tone.js"></script>
 <script defer src="https://lib.midicn.com/vendor/Midi.js"></script>
 <script defer src="../assets/core/player/player.js"></script>

@@ -148,6 +148,14 @@
   overflow-x:auto;
 }
 .kb-fig svg{ display:block; width:100%; height:auto; min-width:min(100%,420px) }
+.kb-fig figcaption{
+  margin-top:var(--s3); font-size:var(--fs-12); color:var(--paper-3); text-align:center;
+}
+/* 音域图（`range` 围栏 · 构建时生成）：图下一行小注（读法说明） */
+.kb-range-note{
+  margin:var(--s2) 0 0; font-size:var(--fs-12); color:var(--paper-3); line-height:1.6;
+}
+.kb-range{ padding-bottom:var(--s3) }
 
 /* ── 听辨组件 ───────────────────────────────────────────────────────── */
 .kb-lab{
@@ -188,6 +196,20 @@
   transition:border-color .1s linear, opacity .1s linear;
 }
 .kb-dot-on{ border-color:var(--accent); color:var(--accent); opacity:1 }
+
+/* 音色试听的状态行（M4）：进度 / 已缓存 / 降级原因 —— 失败不静默，用户看得见 */
+.kb-lab-state{
+  font-family:var(--mono); font-size:var(--fs-11); opacity:.85;
+  padding:.2em .5em; border:1px dashed var(--rule-2); border-radius:var(--r);
+}
+.kb-lab[data-lab="instrument"] .kb-lab-btn[data-k="gm"]{ border-color:var(--rule-2) }
+.kb-lab[data-lab="instrument"] [data-keys]{
+  font-family:var(--mono); letter-spacing:.02em;
+}
+@media (max-width:640px){
+  .kb-lab-state{ display:block; flex:1 1 100%; }
+  .kb-lab[data-lab="instrument"] .kb-lab-btn{ flex:1 1 100%; }
+}
 
 /* ── 关联 chips ─────────────────────────────────────────────────────── */
 .kb-rel{ margin:var(--s6) 0 0 }
