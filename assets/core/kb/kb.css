@@ -197,7 +197,7 @@
 }
 .kb-dot-on{ border-color:var(--accent); color:var(--accent); opacity:1 }
 
-/* 音色试听的状态行（M4）：进度 / 已缓存 / 降级原因 —— 失败不静默，用户看得见 */
+/* 音色试听的状态行：进度 / 已缓存 / 降级原因 —— 失败不静默，用户看得见 */
 .kb-lab-state{
   font-family:var(--mono); font-size:var(--fs-11); opacity:.85;
   padding:.2em .5em; border:1px dashed var(--rule-2); border-radius:var(--r);
@@ -239,6 +239,51 @@
 .kb-list a:hover{ background:var(--ink-2); text-decoration:none }
 .kb-t{ display:block; font-size:var(--fs-16); margin-bottom:.15em }
 .kb-d{ display:block; font-size:var(--fs-13); color:var(--paper-3); line-height:1.55 }
+
+/* ── 骨架期：「内容正在陆续上线」（站内尚无条目时的首页主体）─────────────
+   ⚠️ 只有 `sites.yaml` 里带 `soon` 的站才会渲染这两个类 —— 新增选择器
+   不影响任何既有页面（theo / inst / sf 的渲染路径逐字节不变）。 */
+.kb-soon{
+  margin:var(--s6) 0 0; padding:var(--s5) var(--s5) var(--s4);
+  border:1px solid var(--rule); border-left:3px solid var(--accent);
+  border-radius:var(--r); background:var(--ink-2);
+}
+.kb-soon h2{ font-size:var(--fs-20); border:0; margin:0 0 var(--s2) }
+.kb-soon p{ font-size:var(--fs-16); color:var(--paper-2); margin:0 0 var(--s3) }
+.kb-soon ul{ margin:0; padding-left:1.2em; columns:2; column-gap:var(--s6) }
+@media (max-width:640px){ .kb-soon ul{ columns:1 } }
+/* 面板底部指向「本站收录什么」说明页的那条链接 */
+.kb-soon-more{ margin:var(--s3) 0 0; font-size:var(--fs-13) }
+.kb-soon-more a{ color:var(--paper-2) }
+.kb-soon-more a:hover{ color:var(--accent) }
+/* 已有条目、但仍有大批未上线 → 分类列表上方一条细提示 */
+.kb-soon-hint{
+  font-size:var(--fs-13); color:var(--paper-3); line-height:1.6;
+  margin:0 0 var(--s3); padding-left:.75em; border-left:2px solid var(--accent);
+}
+
+/* ── 门户首页：站点入口卡（容器复用 .kb-cats 网格）─────────────────────
+   识别色由构建器作为 `--pc` 内联到卡片上（取自 sites.yaml 的 accent）。 */
+.kb-ph{ font-size:var(--fs-20); border:0; margin:var(--s6) 0 0 }
+.kb-pcard{
+  display:flex; flex-direction:column; gap:.45em;
+  padding:var(--s4); border:1px solid var(--rule); border-radius:var(--r);
+  background:var(--ink-2); text-decoration:none;
+  transition:border-color var(--t), background-color var(--t);
+}
+.kb-pcard:hover{ border-color:var(--pc); background:var(--ink-3); text-decoration:none }
+.kb-pname{ display:flex; align-items:center; gap:.5em; font-size:var(--fs-16) }
+.kb-pname i{
+  display:inline-block; flex:0 0 auto; width:.45em; height:1em;
+  border-radius:2px; background:var(--pc);
+}
+.kb-pdesc{ font-size:var(--fs-13); color:var(--paper-3); line-height:1.55 }
+.kb-soon-tag{
+  font-size:var(--fs-12); font-style:normal; color:var(--paper-3);
+  border:1px solid var(--rule-2); border-radius:999px;
+  padding:.05em .55em; margin-left:.5em; vertical-align:.05em;
+  white-space:nowrap;
+}
 
 /* ── 底部播放条 ─────────────────────────────────────────────────────── */
 .pbar{

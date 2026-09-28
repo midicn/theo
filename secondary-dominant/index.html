@@ -47,14 +47,14 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
 <nav class="kb-crumbs" aria-label="breadcrumb"><a href="https://theo.midicn.com/">首页</a><span class="sep">›</span><span>副属和弦</span></nav>
 <div class="kb-body"><section class="kb-rel"><h2 id="related">相关</h2><div class="kb-chips"><a class="kb-chip" href="https://theo.midicn.com/harmonic-function/">和声功能</a><a class="kb-chip" href="https://theo.midicn.com/tonicization/">离调</a><a class="kb-chip" href="https://theo.midicn.com/modulation/">转调</a><a class="kb-chip" href="https://theo.midicn.com/chromatic-harmony/">半音化和声</a><a class="kb-chip" href="https://theo.midicn.com/key-signature/">调号</a></div></section><p>副属和弦的思路很简单：<strong>既然属和弦能指向主和弦，那它也能指向别的级数。</strong></p>
 <blockquote><p>在 C 大调里，主和弦是 C。那么"<strong>D 的属和弦</strong>"（A–C♯–E）就可以指向 D 小调那个区域 —— 这个 A 和弦就叫 <strong>V/V</strong>（"五级的五级"），也就是<strong>副属和弦</strong>。</p></blockquote>
-<p>它带来的新音（C♯）<strong>不属于 C 大调音阶</strong>。所以副属和弦天然是一处变化音， 也是一处<strong>色彩变化点</strong>。</p>
+<p>它带来的新音（C♯）<strong>不属于 C 大调音阶</strong>。所以副属和弦天然是一处变化音，也是一处<strong>色彩变化点</strong>。</p>
 <h2 id="常用的一组">常用的一组</h2>
 <div class="kb-tablewrap" role="region" tabindex="0"><table><thead><tr><th>记号</th><th>指向</th><th>在 C 大调里的和弦</th><th>新出现的音</th></tr></thead><tbody><tr><td data-label="记号"><strong>V/ii</strong></td><td data-label="指向">第 2 级</td><td data-label="在 C 大调里的和弦">A 大三（A–C♯–E）</td><td data-label="新出现的音">C♯</td></tr><tr><td data-label="记号"><strong>V/IV</strong></td><td data-label="指向">第 4 级</td><td data-label="在 C 大调里的和弦">C 大三（就是 I —— 因此不构成变化）</td><td data-label="新出现的音">无</td></tr><tr><td data-label="记号"><strong>V/V</strong></td><td data-label="指向">第 5 级</td><td data-label="在 C 大调里的和弦">D 大三（D–F♯–A）</td><td data-label="新出现的音">F♯</td></tr><tr><td data-label="记号"><strong>V/vi</strong></td><td data-label="指向">第 6 级</td><td data-label="在 C 大调里的和弦">E 大三（E–G♯–B）</td><td data-label="新出现的音">G♯</td></tr></tbody></table></div>
 <p>注意第二行：<strong>V/IV 与 I 是同一个和弦</strong>，所以它不产生副属效果 —— 要指向下属，得用 V7/IV（C 属七：C–E–G–B♭），B♭ 才是那个新音。</p>
 <h2 id="它解决到哪里">它解决到哪里</h2>
 <p>副属和弦的"目标"就是它指向的那个级数，而且<strong>优先解决到该级的小三和弦或大三和弦</strong>：</p>
 <blockquote><p>V/V → V（D 大三 → G 大三） V/vi → vi（E 大三 → a 小三）</p></blockquote>
-<p>如果目标级是小三和弦（如 ii、vi），副属和弦里的<strong>升高音</strong>就是一个"临时导音"， 它上行半音进入目标音 —— 与真正的属→主完全同构，只是缩小到了局部。</p>
+<p>如果目标级是小三和弦（如 ii、vi），副属和弦里的<strong>升高音</strong>就是一个"临时导音"，它上行半音进入目标音 —— 与真正的属→主完全同构，只是缩小到了局部。</p>
 <h2 id="与转调的区别">与转调的区别</h2>
 <p>两者用的是<strong>同一套手段</strong>（都是"给某级配一个属"），区别在<strong>它有没有被确认</strong>：</p>
 <div class="kb-tablewrap" role="region" tabindex="0"><table><thead><tr><th></th><th>副属和弦</th><th>转调</th></tr></thead><tbody><tr><td data-label="">目标级被强调多久</td><td data-label="副属和弦">一到两个和弦</td><td data-label="转调">一整段</td></tr><tr><td data-label="">新调号</td><td data-label="副属和弦">不出现</td><td data-label="转调">常出现</td></tr><tr><td data-label="">听感</td><td data-label="副属和弦">色彩变化</td><td data-label="转调">中心转移</td></tr></tbody></table></div>
@@ -96,7 +96,7 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
   </g>
 </svg></figure>
 <h2 id="听一听-副属和弦的色彩">听一听：副属和弦的色彩</h2>
-<p>用进行播放器对比两条：<strong>I → V → I</strong>（全在原调内）与 <strong>I → V/V → V → I</strong>（中途借了 D 的属）。 后者的"亮一下"就是副属和弦的效果。</p>
+<p>用进行播放器对比两条：<strong>I → V → I</strong>（全在原调内）与 <strong>I → V/V → V → I</strong>（中途借了 D 的属）。后者的"亮一下"就是副属和弦的效果。</p>
 <div class="kb-lab" data-lab="progression" data-params="{&quot;type&quot;: &quot;progression&quot;, &quot;key&quot;: &quot;C4&quot;, &quot;degrees&quot;: [&quot;I&quot;, &quot;V&quot;, &quot;I&quot;], &quot;label&quot;: &quot;原调内：I → V → I&quot;, &quot;hint&quot;: &quot;逐个和弦依次听，最后整体再听一遍&quot;}"></div>
 <div class="kb-lab" data-lab="progression" data-params="{&quot;type&quot;: &quot;progression&quot;, &quot;key&quot;: &quot;C4&quot;, &quot;degrees&quot;: [&quot;I&quot;, &quot;V&quot;, &quot;V&quot;, &quot;I&quot;], &quot;label&quot;: &quot;副属走向：I → V/V → V → I&quot;, &quot;hint&quot;: &quot;与上一条对比：中途多出的那个和弦带来色彩变化&quot;}"></div>
 <h2 id="常见误解">常见误解</h2>
@@ -112,7 +112,7 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
 <footer class="foot">
   <div class="footwrap">
     <div class="footline"><nav class="kb-switch" aria-label="midicn"><a href="https://midicn.com/">首页</a><a href="https://gloss.midicn.com/">音乐词典</a><a href="https://hist.midicn.com/">音乐史</a><a href="https://comp.midicn.com/">作曲家</a><a href="https://theo.midicn.com/" aria-current="page">乐理与和声</a><a href="https://inst.midicn.com/">乐器图鉴</a><a href="https://gen.midicn.com/">流派与风格</a><a href="https://prod.midicn.com/">制作与数字音乐</a><a href="https://cn.midicn.com/">中国音乐</a><span class="kb-switch-sep" aria-hidden="true">/</span><a href="https://lib.midicn.com/">音乐库</a><a href="https://mid.midicn.com/">维度浏览</a><a href="https://zip.midicn.com/">包下载</a><a href="https://sf.midicn.com/">音色库</a></nav></div>
-    <p class="footnote">内容原创，依 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 授权（可商用、可改写，须署名）。曲目数据来自 <a href="https://lib.midicn.com/">midicn-lib</a>，许可逐曲标注，本站不改变原许可；本站内容为通识性说明，不构成专业意见，许可状态以 midicn-lib 台账为准。</p><p class="footmeta"><span class="footlinks"><a href="https://midicn.com/legal/terms/">使用条款</a> · <a href="https://midicn.com/legal/privacy/">隐私政策</a> · <a href="https://midicn.com/legal/disclaimer/">免责声明</a> · <a href="https://midicn.com/legal/copyright/">版权与侵权通知</a></span><span class="footcore">内核 v0.5.0</span></p>
+    <p class="footnote">内容原创，依 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 授权（可商用、可改写，须署名）。曲目数据来自 <a href="https://lib.midicn.com/">midicn-lib</a>，许可逐曲标注，本站不改变原许可；本站内容为通识性说明，不构成专业意见，许可状态以 midicn-lib 台账为准。</p><p class="footmeta"><span class="footlinks"><a href="https://midicn.com/legal/terms/">使用条款</a> · <a href="https://midicn.com/legal/privacy/">隐私政策</a> · <a href="https://midicn.com/legal/disclaimer/">免责声明</a> · <a href="https://midicn.com/legal/copyright/">版权与侵权通知</a></span><span class="footcore">内核 v0.6.0</span></p>
   </div>
 </footer>
 <div id="player" class="pbar" hidden>
@@ -125,7 +125,7 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
     <button type="button" class="kb-lab-btn" data-pbar="stop">停止</button>
   </div>
 </div>
-<script>window.__KB__={"site": "theo", "core": "0.5.0", "lang": "zh", "lbl": {"play": "播放", "pause": "暂停", "toc": "本页目录"}};</script>
+<script>window.__KB__={"site": "theo", "core": "0.6.0", "lang": "zh", "lbl": {"play": "播放", "pause": "暂停", "toc": "本页目录"}};</script>
 <script defer src="https://lib.midicn.com/vendor/Tone.js"></script>
 <script defer src="https://lib.midicn.com/vendor/Midi.js"></script>
 <script defer src="../assets/core/player/player.js"></script>

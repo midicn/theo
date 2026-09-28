@@ -48,11 +48,11 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
 <div class="kb-body"><section class="kb-rel"><h2 id="related">相关</h2><div class="kb-chips"><a class="kb-chip" href="https://theo.midicn.com/key-signature/">调号</a><a class="kb-chip" href="https://theo.midicn.com/enharmonic/">等音</a><a class="kb-chip" href="https://theo.midicn.com/chromatic/">半音阶</a><a class="kb-chip" href="https://theo.midicn.com/harmonic-minor/">和声小调</a><a class="kb-chip" href="https://theo.midicn.com/leading-tone-chord/">导七和弦</a></div></section><p>变音记号（accidentals）共<strong>五种</strong>，但规则只有<strong>一条</strong>，用途有<strong>三种</strong>。</p>
 <h2 id="五种记号">五种记号</h2>
 <div class="kb-tablewrap" role="region" tabindex="0"><table><thead><tr><th>记号</th><th>名称</th><th>作用</th></tr></thead><tbody><tr><td data-label="记号"><strong>♯</strong></td><td data-label="名称">升号</td><td data-label="作用">升高半音</td></tr><tr><td data-label="记号"><strong>♭</strong></td><td data-label="名称">降号</td><td data-label="作用">降低半音</td></tr><tr><td data-label="记号"><strong>♮</strong></td><td data-label="名称">还原号</td><td data-label="作用">取消前面的升降，回到本位</td></tr><tr><td data-label="记号"><strong>𝄪</strong></td><td data-label="名称">重升号</td><td data-label="作用">升高两个半音（= 一个全音）</td></tr><tr><td data-label="记号"><strong>𝄫</strong></td><td data-label="名称">重降号</td><td data-label="作用">降低两个半音</td></tr></tbody></table></div>
-<p><strong>重升与重降看起来奇怪，但有明确的必要性</strong>： 当某个音<strong>已经被调号升高过一次</strong>（比如 F♯），而你又需要<strong>再升高它</strong>时， 就用重升号（𝄪）——<strong>而不是写 G</strong>。原因见下面第三种用途。</p>
+<p><strong>重升与重降看起来奇怪，但有明确的必要性</strong>：当某个音<strong>已经被调号升高过一次</strong>（比如 F♯），而你又需要<strong>再升高它</strong>时，就用重升号（𝄪）——<strong>而不是写 G</strong>。原因见下面第三种用途。</p>
 <h2 id="一条范围规则">一条范围规则</h2>
 <blockquote><p><strong>变音记号只在本小节内、同一高度上有效。</strong></p></blockquote>
 <div class="kb-tablewrap" role="region" tabindex="0"><table><thead><tr><th>情形</th><th>规则</th></tr></thead><tbody><tr><td data-label="情形">同一小节内<strong>同音高的音</strong>再次出现</td><td data-label="规则"><strong>不必重标</strong>（auto 生效）</td></tr><tr><td data-label="情形">跨到<strong>下一小节</strong></td><td data-label="规则"><strong>必须重标</strong>（否则自动还原）</td></tr><tr><td data-label="情形">同一小节内<strong>不同八度</strong>的同音名</td><td data-label="规则"><strong>需要另标</strong>（严格记谱规范）</td></tr></tbody></table></div>
-<p><strong>最后一行是容易被忽略的细节</strong>：变音记号的作用是<strong>"那个高度的音"</strong>，不是"那个音名在任何八度"。 （不同出版社的从宽做法不一，但严格规范要求另标。）</p>
+<p><strong>最后一行是容易被忽略的细节</strong>：变音记号的作用是<strong>"那个高度的音"</strong>，不是"那个音名在任何八度"。（不同出版社的从宽做法不一，但严格规范要求另标。）</p>
 <h2 id="三种用途">三种用途</h2>
 <p><strong>① 为和声功能服务</strong>（最常见）</p>
 <div class="kb-tablewrap" role="region" tabindex="0"><table><thead><tr><th>用法</th><th>例</th></tr></thead><tbody><tr><td data-label="用法">升高导音</td><td data-label="例">小调里把第 7 级升高，以取得属功能（见 <a href="https://theo.midicn.com/harmonic-minor/">和声小调</a>）</td></tr><tr><td data-label="用法">副属和弦的变化音</td><td data-label="例">见 <a href="https://theo.midicn.com/leading-tone-chord/">导七和弦</a></td></tr><tr><td data-label="用法">半音经过</td><td data-label="例">见 <a href="https://theo.midicn.com/chromatic/">半音</a></td></tr></tbody></table></div>
@@ -117,7 +117,7 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
 <footer class="foot">
   <div class="footwrap">
     <div class="footline"><nav class="kb-switch" aria-label="midicn"><a href="https://midicn.com/">首页</a><a href="https://gloss.midicn.com/">音乐词典</a><a href="https://hist.midicn.com/">音乐史</a><a href="https://comp.midicn.com/">作曲家</a><a href="https://theo.midicn.com/" aria-current="page">乐理与和声</a><a href="https://inst.midicn.com/">乐器图鉴</a><a href="https://gen.midicn.com/">流派与风格</a><a href="https://prod.midicn.com/">制作与数字音乐</a><a href="https://cn.midicn.com/">中国音乐</a><span class="kb-switch-sep" aria-hidden="true">/</span><a href="https://lib.midicn.com/">音乐库</a><a href="https://mid.midicn.com/">维度浏览</a><a href="https://zip.midicn.com/">包下载</a><a href="https://sf.midicn.com/">音色库</a></nav></div>
-    <p class="footnote">内容原创，依 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 授权（可商用、可改写，须署名）。曲目数据来自 <a href="https://lib.midicn.com/">midicn-lib</a>，许可逐曲标注，本站不改变原许可；本站内容为通识性说明，不构成专业意见，许可状态以 midicn-lib 台账为准。</p><p class="footmeta"><span class="footlinks"><a href="https://midicn.com/legal/terms/">使用条款</a> · <a href="https://midicn.com/legal/privacy/">隐私政策</a> · <a href="https://midicn.com/legal/disclaimer/">免责声明</a> · <a href="https://midicn.com/legal/copyright/">版权与侵权通知</a></span><span class="footcore">内核 v0.5.0</span></p>
+    <p class="footnote">内容原创，依 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh">CC BY 4.0</a> 授权（可商用、可改写，须署名）。曲目数据来自 <a href="https://lib.midicn.com/">midicn-lib</a>，许可逐曲标注，本站不改变原许可；本站内容为通识性说明，不构成专业意见，许可状态以 midicn-lib 台账为准。</p><p class="footmeta"><span class="footlinks"><a href="https://midicn.com/legal/terms/">使用条款</a> · <a href="https://midicn.com/legal/privacy/">隐私政策</a> · <a href="https://midicn.com/legal/disclaimer/">免责声明</a> · <a href="https://midicn.com/legal/copyright/">版权与侵权通知</a></span><span class="footcore">内核 v0.6.0</span></p>
   </div>
 </footer>
 <div id="player" class="pbar" hidden>
@@ -130,7 +130,7 @@ if(!L.some(function(x){return /^zh/i.test(String(x))})){
     <button type="button" class="kb-lab-btn" data-pbar="stop">停止</button>
   </div>
 </div>
-<script>window.__KB__={"site": "theo", "core": "0.5.0", "lang": "zh", "lbl": {"play": "播放", "pause": "暂停", "toc": "本页目录"}};</script>
+<script>window.__KB__={"site": "theo", "core": "0.6.0", "lang": "zh", "lbl": {"play": "播放", "pause": "暂停", "toc": "本页目录"}};</script>
 <script defer src="https://lib.midicn.com/vendor/Tone.js"></script>
 <script defer src="https://lib.midicn.com/vendor/Midi.js"></script>
 <script defer src="../assets/core/player/player.js"></script>
