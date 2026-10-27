@@ -7,21 +7,21 @@
   "display": "standalone",
   "orientation": "any",
   "background_color": "#070706",
-  "theme_color": "#5B7FA8",
+  "theme_color": "#7E9BFF",
   "lang": "zh-Hans",
   "icons": [
     {
-      "src": "assets/core/icons/icon-192.png",
+      "src": "assets/core/icons/icon-192.38fcdb520a.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/core/icons/icon-512.png",
+      "src": "assets/core/icons/icon-512.5be5e2f189.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "assets/core/icons/icon-maskable-512.png",
+      "src": "assets/core/icons/icon-maskable-512.7193f36edd.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

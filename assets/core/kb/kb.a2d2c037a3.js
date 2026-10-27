@@ -66,12 +66,63 @@
       .forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
   }
 
+  /* ── 顶栏水母的状态机 ─────────────────────────────────────────────
+     图形由内核在构建期画进页里（idle／playing／loading／done／hint），
+     这里只决定露出哪一张：往 `<html>` 挂 data-jf。前端不重画图形 ——
+     同一只水母画两处必然漂移，这个教训在 shell.js 副本上已经付过一次。
+     优先级 playing > loading > hint > done：播放是"此刻正在发生"，
+     读到页脚是"这一页结束了"，后者不该盖住前者。
+     每个来源只写自己那一位，显示的是合成结果，所以互不踩。 */
+  var jfBits = { playing: false, loading: false, hint: false, done: false };
+  function setJf(k, on) {
+    if (!(k in jfBits) || jfBits[k] === !!on) return;
+    jfBits[k] = !!on;
+    applyJf();
+  }
+  function applyJf() {
+    var st = jfBits.playing ? 'playing' : jfBits.loading ? 'loading'
+           : jfBits.hint ? 'hint' : jfBits.done ? 'done' : '';
+    var root = document.documentElement;
+    if (st) root.setAttribute('data-jf', st); else root.removeAttribute('data-jf');
+  }
+  /* 读到页脚＝读完。只有正文页算这件事：列表页与首页的页脚第一屏就露出来，
+     一进来就亮 done 等于没有信息。rootMargin 抬 8% 是让"到底"早半个呼吸，
+     不等用户已经滚不动了才亮。 */
+  function bindJfDone() {
+    if (!document.querySelector('main.doc-article .kb-body')) return;
+    var foot = document.querySelector('.foot');
+    if (!foot || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (es, ob) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { setJf('done', true); ob.disconnect(); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' }).observe(foot);
+  }
+  /* 首访亮一次 hint，六秒或第一次按下即收回，之后永不再亮。
+     第二次还亮就是噪音 —— 用户会开始无视这个位置的所有信号。 */
+  function bindJfHint() {
+    if (!window.__KB__ || window.__KB__.site !== 'home') return;
+    try {
+      if (localStorage.getItem('midicn-home-seen') === '1') return;
+    } catch (e) { return; }                    // 隐私模式／file:// 拿不到 localStorage
+    setJf('hint', true);
+    var timer = setTimeout(off, 6000);
+    document.addEventListener('pointerdown', off, { once: true });
+    function off() {
+      clearTimeout(timer);
+      document.removeEventListener('pointerdown', off);
+      setJf('hint', false);
+      try { localStorage.setItem('midicn-home-seen', '1'); } catch (e) {}
+    }
+  }
+
   function engineReady() {
     if (typeof window.Player === 'undefined') return false;
     if (!engineTried) {
       engineTried = true;
       window.Player.init({
         onState: function (playing) {
+          setJf('playing', !!playing);
           if (!playing) {
             clearGlyphs();
             // 放完自然结束（进度已到末尾）才收起播放条；中途暂停则保留，便于继续
@@ -102,9 +153,14 @@
         },
         onStatus: function (txt) {
           var bar = document.getElementById('player');
-          if (!bar) return;
-          var t = bar.querySelector('.pbar-title');
-          if (t) t.textContent = txt || '';
+          if (bar) {
+            var t = bar.querySelector('.pbar-title');
+            if (t) t.textContent = txt || '';
+          }
+          // 音频引擎是懒加载的（79.8KB 那一件）：等它的这段空白，水母亮 loading。
+          // 认文案而非加新钩子 —— 这条状态只持续几百毫秒，为一个它改动 player 的
+          // 对外接口不值；文案与 player.js 里 status('加载音频引擎…') 是同一处约定。
+          setJf('loading', /^加载音频引擎/.test(txt || ''));
         }
       });
     }
@@ -978,11 +1034,44 @@
     }, { passive: true });
   }
 
-  function boot() { mountLabs(); buildToc(); bindSeek(); bindHeaderCollapse(); }
+  function boot() {
+    mountLabs(); buildToc(); bindSeek(); bindHeaderCollapse();
+    bindJfDone(); bindJfHint();
+  }
+
+  /* ── service worker：同站内缓存与秒开 ─────────────────────────────
+     注册推迟到空闲时，别和首屏抢带宽。sw.js 由 install_core 生成到每站根目录
+     （子域下 scope 不能跨 origin，所以是"一份代码、11 个根"）。 */
+  function registerSW() {
+    if (!('serviceWorker' in navigator) || location.protocol !== 'https:') return;
+    navigator.serviceWorker.register('/sw.js').catch(function () { /* 没 SW 也应能用 */ });
+  }
+
+  /* ── 切站预热 ──────────────────────────────────────────────────────
+     子域是不同 origin，SW 管不到；但 no-cors 的 fetch 仍会把响应写进
+     浏览器 HTTP 缓存，下一次导航直接命中。这是 U3（子域不变）之下
+     唯一能买到的"切站像站内"，别把它当成同源过渡动画。 */
+  var warmed = {};
+  function warm(el) {
+    if (!el || el.tagName !== 'A') return;
+    var href = el.href;
+    if (!href || href.indexOf('http') !== 0 || warmed[href]) return;
+    if (new URL(href).origin === location.origin) return;   // 同站交给 SW
+    warmed[href] = 1;
+    try { fetch(href, { mode: 'no-cors', credentials: 'omit' })
+            .catch(function () { delete warmed[href]; }); } catch (e) { /* 忽略 */ }
+  }
+  function bindWarm() {
+    document.addEventListener('pointerover', function (e) { warm(e.target && e.target.closest('a')); });
+    document.addEventListener('pointerdown', function (e) { warm(e.target && e.target.closest('a')); });
+  }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
   } else {
     boot();
   }
+  bindWarm();
+  if ('requestIdleCallback' in window) { requestIdleCallback(registerSW, { timeout: 4000 }); }
+  else { setTimeout(registerSW, 2500); }
 })();

@@ -24,6 +24,35 @@
   }
   function safe(fn) { try { return fn(); } catch (e) { return null; } }
 
+  /* ── 供应商库按需加载 ───────────────────────────────────────────────
+     Tone.js 压缩后 79.8 KB，占全站 JS 载荷 71%，而它只有用户点播放时才用得上。
+     过去 1,078 页每页两个无条件 <script>；现在 URL 从 __KB__.vendor 读，
+     首次播放时注入并等待。地址由构建器注入，页面模板里不再有这两个标签。 */
+  var vendorP = null;
+  function loadVendor() {
+    if (global.Tone && global.Midi) return Promise.resolve(true);
+    if (vendorP) return vendorP;
+    var v = (global.__KB__ && global.__KB__.vendor) || {};
+    var urls = [];
+    if (!global.Tone && v.tone) urls.push(v.tone);
+    if (!global.Midi && v.midi) urls.push(v.midi);
+    if (!urls.length) {
+      lastError = '未配置音频库地址';
+      return Promise.resolve(false);
+    }
+    vendorP = Promise.all(urls.map(function (u) {
+      return new Promise(function (res) {
+        var el = document.createElement('script');
+        el.src = u;
+        el.async = true;
+        el.onload = function () { res(true); };
+        el.onerror = function () { lastError = '音频库加载失败：' + u; res(false); };
+        document.head.appendChild(el);
+      });
+    })).then(function (rs) { return rs.every(Boolean); });
+    return vendorP;
+  }
+
   /* ── 音频图（首次播放时建立）──────────────────────────────────────── */
   function initAudio() {
     if (ready) return true;
@@ -112,7 +141,12 @@
     if (Array.isArray(list)) queue = list;
     if (!track || typeof track.f !== 'string' || !track.f) { status('该条目缺少文件路径'); return; }
 
-    if (!initAudio()) { status('Tone.js 未加载'); return; }
+    if (!global.Tone || !global.Midi) {
+      status('加载音频引擎…');
+      var okv = await loadVendor();
+      if (!okv) { status(lastError || '音频引擎不可用'); return; }
+    }
+    if (!initAudio()) { status(lastError || 'Tone.js 未就绪'); return; }
     safe(function () { Tone.start(); });
     if (global.Tone && Tone.start && Tone.start().catch) safe(function () { Tone.start()['catch'](function () {}); });
     if (!global.Midi) { status('Midi.js 未加载'); return; }
