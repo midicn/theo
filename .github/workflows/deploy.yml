@@ -44,6 +44,13 @@ jobs:
           BASE = 'https://theo.midicn.com/'
           s = open('sitemap.xml', encoding='utf-8').read()
           locs = re.findall(r'<loc>([^<]+)</loc>', s)
+          import glob, json, os
+          amap0 = json.load(open('_build/assets/core/asset-map.json', encoding='utf-8')).get('assets') or {}
+          keep0 = {os.path.normpath('_build/assets/core/asset-map.json')}
+          keep0 |= {os.path.normpath('_build/' + v.lstrip('/')) for v in amap0.values()}
+          for fp0 in glob.glob('_build/assets/core/**/*', recursive=True):
+              if os.path.isfile(fp0) and os.path.normpath(fp0) not in keep0:
+                  os.remove(fp0)
           if not locs:
               sys.exit('::error::sitemap.xml 里没有任何 <loc> —— 拒绝装配空站点')
 
