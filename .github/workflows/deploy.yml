@@ -35,7 +35,7 @@ jobs:
         run: |
           set -e
           mkdir -p _build
-          cp index.html manifest.webmanifest robots.txt sitemap.xml _build/
+          cp index.html manifest.webmanifest robots.txt sitemap.xml 404.html sw.js _headers _build/
           cp -r assets _build/assets
 
           python3 - <<'PY'
@@ -79,9 +79,16 @@ jobs:
           # ── 结构断言：PWA 与资产必须齐 ────────────────────────────────────
           for f in ('_build/manifest.webmanifest', '_build/en/manifest.webmanifest',
                     '_build/robots.txt', '_build/sitemap.xml',
-                    '_build/assets/core/kb/kb.js', '_build/assets/core/base.css'):
+                    '_build/404.html', '_build/sw.js', '_build/_headers',
+                    '_build/assets/core/asset-map.json'):
               if not os.path.isfile(f):
                   sys.exit('::error::装配缺文件 %s' % f)
+          import json
+          amap = json.load(open('_build/assets/core/asset-map.json', encoding='utf-8')).get('assets') or {}
+          for logical in ('assets/core/midicn.css', 'assets/core/kb/kb.js', 'assets/core/player/player.js'):
+              target = amap.get(logical)
+              if not target or not os.path.isfile('_build/' + target.lstrip('/')):
+                  sys.exit('::error::装配缺核心资产 %s' % logical)
 
           # ── 产物卫生：内部标记 / 脚本名 / 开发说明一律不得上线 ──────────
           # 通用判据：不点名任何具体工具，只按"形态"判断
