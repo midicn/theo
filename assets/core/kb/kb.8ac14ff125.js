@@ -1044,7 +1044,7 @@
      （子域下 scope 不能跨 origin，所以是"一份代码、11 个根"）。 */
   function registerSW() {
     if (!('serviceWorker' in navigator) || location.protocol !== 'https:') return;
-    navigator.serviceWorker.register('/sw.js').catch(function () { /* 没 SW 也应能用 */ });
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).catch(function () { /* 没 SW 也应能用 */ });
   }
 
   /* ── 切站预热 ──────────────────────────────────────────────────────
