@@ -1125,3 +1125,74 @@
     });
   }
 })();
+
+/* ── 随便换一条：从本站 random.json 里随机跳一条 ─────────────────── */
+(function () {
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-random]') : null;
+    if (!b) return;
+    e.preventDefault();
+    if (typeof fetch !== 'function') return;
+    var src = b.getAttribute('data-src') || 'random.json';
+    fetch(src, { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (pool) {
+      if (!pool || !pool.length) return;
+      var here = location.pathname;
+      var pick = pool[Math.floor(Math.random() * pool.length)];
+      if (pick && pick.u) { location.href = pick.u; return; }
+      for (var i = 0; i < 4 && here.indexOf('/' + pick.id + '/') >= 0; i++) {
+        pick = pool[Math.floor(Math.random() * pool.length)];
+      }
+      var base = src.replace(/random\.json.*$/, '');
+      location.href = base + pick.id + '/';
+    }).catch(function () {});
+  });
+})();
+
+/* ── 同一条线：从本站 random.json 里挑同分类的三条 ────────────────── */
+(function () {
+  var box = document.querySelector('[data-more]');
+  if (!box || typeof fetch !== 'function') return;
+  var cat = box.getAttribute('data-cat');
+  if (!cat) return;
+  var src = box.getAttribute('data-src') || '../random.json';
+  var root = src.replace(/random\.json.*$/, '');
+  var langp = /\/en\//.test(location.pathname) ? 'en/' : '';
+  fetch(src, { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (pool) {
+      var here = location.pathname.split('/').filter(Boolean).pop();
+      var pick = (pool || []).filter(function (x) { return x.c === cat && x.id !== here; });
+      if (!pick.length) { box.remove(); return; }
+      var start = Math.abs((here || '').length) % Math.max(1, pick.length - 3);
+      var sel = pick.slice(start, start + 3);
+      while (sel.length < 3 && pick.length >= 3) sel.push(pick[sel.length]);
+      var list = box.querySelector('.kb-more-list');
+      sel.forEach(function (x) {
+        var a = document.createElement('a');
+        a.href = root + langp + x.id + '/';
+        var b = document.createElement('b');
+        b.textContent = x.t;
+        var s = document.createElement('span');
+        s.textContent = x.c || '';
+        a.appendChild(b); a.appendChild(s);
+        list.appendChild(a);
+      });
+    }).catch(function () { box.remove(); });
+})();
+
+/* ── 首页分级筛选：按 level 显示条目 ─────────────────────────────── */
+(function () {
+  var bar = document.querySelector('[data-filterbar]');
+  if (!bar) return;
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.kb-filter') : null;
+    if (!b) return;
+    var lvl = b.getAttribute('data-lvl');
+    bar.querySelectorAll('.kb-filter').forEach(function (x) {
+      x.classList.toggle('on', x === b);
+    });
+    document.querySelectorAll('[data-entry]').forEach(function (li) {
+      li.hidden = lvl !== 'all' && li.getAttribute('data-level') !== lvl;
+    });
+  });
+})();
