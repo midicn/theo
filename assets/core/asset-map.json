@@ -1,16 +1,16 @@
 {
-  "core_version": "0.9.0",
+  "core_version": "0.9.1",
   "assets": {
     "assets/core/icons/favicon.svg": "/assets/core/icons/favicon.9e01bb7a2e.svg",
     "assets/core/icons/icon-192.png": "/assets/core/icons/icon-192.38fcdb520a.png",
     "assets/core/icons/icon-512.png": "/assets/core/icons/icon-512.5be5e2f189.png",
     "assets/core/icons/icon-maskable-512.png": "/assets/core/icons/icon-maskable-512.7193f36edd.png",
-    "assets/core/kb/kb.js": "/assets/core/kb/kb.01f864042e.js",
+    "assets/core/kb/kb.js": "/assets/core/kb/kb.8126871cae.js",
     "assets/core/kb/notation.js": "/assets/core/kb/notation.4c0583bff1.js",
-    "assets/core/kb/v3.js": "/assets/core/kb/v3.039b0194f4.js",
-    "assets/core/midicn.css": "/assets/core/midicn.38d7374ce6.css",
+    "assets/core/kb/v3.js": "/assets/core/kb/v3.967e11ada2.js",
+    "assets/core/midicn.css": "/assets/core/midicn.7cec81ba2c.css",
     "assets/core/player/player.js": "/assets/core/player/player.19707132f3.js",
-    "assets/core/theme.js": "/assets/core/theme.8087c75b5a.js",
+    "assets/core/theme.js": "/assets/core/theme.2effc39d25.js",
     "assets/core/v6-data.css": "/assets/core/v6-data.b4d0081a6b.css"
   }
 }
