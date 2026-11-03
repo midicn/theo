@@ -1,4 +1,4 @@
-# MIDI音乐 · 乐理与和声
+# midicn · 乐理与和声
 
 > 听音乐，学音乐，做音乐。
 
@@ -9,7 +9,7 @@ This curated discovery index grants no model-training or third-party material ri
 
 ## 网站与使用说明
 
-- [MIDI音乐：站点与使用说明](https://home.midicn.com/about/): 品牌、分站、来源与反馈。
+- [midicn：站点与使用说明](https://midicn.com/about/): 品牌、分站、来源与反馈。
 
 ## 内容入口
 
@@ -32,4 +32,4 @@ This curated discovery index grants no model-training or third-party material ri
 
 ## English
 
-- [MIDI Music](https://home.midicn.com/en/): Listen, learn and make music.
+- [midicn](https://midicn.com/en/): Listen, learn and make music.
