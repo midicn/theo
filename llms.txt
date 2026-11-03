@@ -1,0 +1,35 @@
+# MIDI音乐 · 乐理与和声
+
+> 听音乐，学音乐，做音乐。
+
+音高、节奏、音阶、和声与曲式，配合谱例和听辨练习。
+
+这是网站内容入口索引。收录与引用不改变原文、曲目、音色或歌词的许可；本文件不授予模型训练权。
+This curated discovery index grants no model-training or third-party material rights.
+
+## 网站与使用说明
+
+- [MIDI音乐：站点与使用说明](https://home.midicn.com/about/): 品牌、分站、来源与反馈。
+
+## 内容入口
+
+- [乐理与和声 · midicn](https://theo.midicn.com/): 音高、节奏、音阶、和声与曲式，配合谱例和听辨练习。
+- [变音记号 · 乐理与和声](https://theo.midicn.com/accidentals/): 五种记号、一条范围规则、三种用途
+- [加音和弦 · 乐理与和声](https://theo.midicn.com/added-tone-chord/): 在完整三和弦上再加一个音——不替换、不叠三度
+- [爱奥尼亚调式 · 乐理与和声](https://theo.midicn.com/aeolian/): 自然小调的调式名称，与大调及其他调式按主音和音级区别
+- [演奏法记号 · 乐理与和声](https://theo.midicn.com/articulation/): 它决定音与音"怎么连接"——与"多响"是两个维度
+- [人工音阶 · 乐理与和声](https://theo.midicn.com/artificial-scale/): 不是从传统长出来的，而是按某个想法造出来的
+- [增音程与减音程 · 乐理与和声](https://theo.midicn.com/augmented-diminished/): 纯音程与大小音程再宽一个半音或窄一个半音的结果
+- [增三和弦 · 乐理与和声](https://theo.midicn.com/augmented-triad/): 两个大三度叠起来——对称、无归属，自然音阶里根本不出现
+- [二段体 · 乐理与和声](https://theo.midicn.com/binary-form/): AB 两段——巴洛克舞曲的基本形态，也是奏鸣曲式的前身
+- [蓝调音阶 · 乐理与和声](https://theo.midicn.com/blues-scale/): 小调五声加一个降五度——一个音把它从柔变冲
+- [旋律的呼吸与句读 · 乐理与和声](https://theo.midicn.com/breath-phrasing/): 旋律有呼吸——这是它区别于音阶跑动的关键
+- [终止式 · 乐理与和声](https://theo.midicn.com/cadence/): 在乐句边界判断和声收束，区分正格、变格、半终止与阻碍终止
+- [卡农曲式 · 乐理与和声](https://theo.midicn.com/canon-form/): 把卡农写法组织成整曲——结构由"追随规则的变化"构成
+- [卡农 · 乐理与和声](https://theo.midicn.com/canon/): 一条旋律被另一声部严格追随到底——模仿用到极致
+- [固定旋律 · 乐理与和声](https://theo.midicn.com/cantus-firmus/): 一条给定的旋律当骨架，其他声部围着它长出来
+- [中国五声调式 · 乐理与和声](https://theo.midicn.com/chinese-pentatonic/): 宫商角徵羽——同一批五声，五个音都能当主音
+
+## English
+
+- [MIDI Music](https://home.midicn.com/en/): Listen, learn and make music.
